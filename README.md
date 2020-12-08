@@ -1,5 +1,2 @@
 # Battleship (Turing Mod 1, Project 2)
-
-### Collaborators
-- aschwartz1
-- b-enji-cmd
+[Spec Site](https://backend.turing.io/module1/projects/battleship/index)
