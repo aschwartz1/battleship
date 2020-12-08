@@ -12,4 +12,9 @@ class ShipTest < MiniTest::Test
     assert_instance_of Cell, @cell
   end
 
+  def test_it_has_things
+    assert_equal "B4", @cell.coordinate
+    refute @cell.ship
+  end
+
 end
