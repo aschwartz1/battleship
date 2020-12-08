@@ -16,4 +16,9 @@ class ShipTest < MiniTest::Test
     assert_equal 3, @cruiser.length
     assert_equal 3, @cruiser.health
   end
+
+  def test_sunk?
+    sunk_ship = Ship.new("USS Oops", 0)
+    assert_equal true, sunk_ship.sunk?
+  end
 end
