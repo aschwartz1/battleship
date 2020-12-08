@@ -6,6 +6,7 @@ require './lib/ship'
 class ShipTest < MiniTest::Test
   def setup
     @cell = Cell.new("B4")
+    @cruiser = Ship.new("Cruiser",3)
   end
 
   def test_it_is
@@ -17,4 +18,12 @@ class ShipTest < MiniTest::Test
     refute @cell.ship
   end
 
+  def test_empty?
+    assert_equal true, @cell.empty?
+  end
+
+  def test_it_can_place_ship
+    @cell.place_ship(@cruiser)
+    assert_equal false, @cell.empty?
+  end
 end
