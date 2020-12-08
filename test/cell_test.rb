@@ -37,4 +37,27 @@ class ShipTest < MiniTest::Test
     assert_equal true, @cell.fired_upon?
   end
 
+  def test_render_empty
+    assert_equal ".", @cell.render
+  end
+
+  def test_render_miss
+    @cell.fire_upon
+    assert_equal "M", @cell.render
+  end
+
+  def test_render_hit
+    skip
+    @cell.place_ship(@cruiser)
+    @cell.fire_upon
+    assert_equal "H", @cell.render
+  end
+
+  def test_render_sunk
+    skip
+    @cell.place_ship(@cruiser)
+    @cell.fire_upon
+    assert_equal "X", @cell.render
+  end
+
 end
