@@ -47,15 +47,14 @@ class ShipTest < MiniTest::Test
   end
 
   def test_render_hit
-    skip
     @cell.place_ship(@cruiser)
     @cell.fire_upon
     assert_equal "H", @cell.render
   end
 
   def test_render_sunk
-    skip
-    @cell.place_ship(@cruiser)
+    sunk_cruiser = Ship.new("Cruiser",1)
+    @cell.place_ship(sunk_cruiser)
     @cell.fire_upon
     assert_equal "X", @cell.render
   end
