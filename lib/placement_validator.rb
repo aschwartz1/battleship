@@ -6,10 +6,25 @@ class PlacementValidator
   end
 
   def is_consecutive?(coords)
-    # Make sure coordinates are 2 chars long
+    # Split coords into 2 arrays (for letters & numbers)
     #
-    # Check first char
-    # Check second char
+    # Is letters arr valid?
+    #   - letters are consecutive
+    #   - OR letters are all the same
+    #
+    # Is numbers arr valid?
+    #  - numbers are consecutive
+    #  - OR numbers are all the same
+
+
+  end
+
+  # Possibly?
+  def is_range_consecutive(range)
+    # range is an array of integers
+    #
+    # Does this even work?
+    # is range == range.min.each_cons(range.length)
   end
 
   def not_diagonal?(ship, coords)
@@ -23,6 +38,7 @@ class PlacementValidator
   private
 
   def valid_coordinate_lengths?(coordinates)
-    coordinates.any { |coordinate| coordinate.length != 2 }
+    # Using "not any" for lack of an "all" enumerable
+    !coordinates.any { |coordinate| coordinate.length != 2 }
   end
 end
