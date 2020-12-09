@@ -2,7 +2,7 @@ require './lib/ship'
 
 class PlacementValidator
   def is_valid_length?(ship, coords)
-
+    ship.length == coords.count
   end
 
   def is_consecutive?(ship, coords)
