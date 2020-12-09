@@ -21,4 +21,16 @@ class BoardTest < Minitest::Test
     assert_equal 16, cells_hash.length
     assert_equal 16, cells_hash.select { |k, v| v.is_a? Cell }.length
   end
+
+  def test_valid_coordinate_true
+    coordinate = "A1"
+
+    assert_equal true, @board.valid_coordinate?(coordinate)
+  end
+
+  def test_valid_coordinate_false
+    coordinate = "X9"
+
+    assert_equal false, @board.valid_coordinate?(coordinate)
+  end
 end
