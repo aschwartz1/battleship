@@ -22,6 +22,7 @@ class Cell
 
   def fire_upon
     @fired_upon = true
+    @ship.hit unless empty?
   end
 
   def render
@@ -29,12 +30,24 @@ class Cell
       '.'
     elsif render_miss?
       'M'
+    elsif render_sunk?
+      'X'
+    elsif render_hit?
+      'H'
     else
       "Something went wrong!"
     end
   end
-  
+
   private
+
+  def render_sunk?
+    !empty? && @ship.sunk?
+  end
+
+  def render_hit?
+    !empty? && fired_upon?
+  end
 
   def render_empty?
     empty? && !fired_upon?
@@ -43,7 +56,4 @@ class Cell
   def render_miss?
     empty? && fired_upon?
   end
-
-
-
 end
