@@ -5,16 +5,24 @@ class PlacementValidator
     ship.length == coords.count
   end
 
-  def is_consecutive?(ship, coords)
-
+  def is_consecutive?(coords)
+    # Make sure coordinates are 2 chars long
+    #
+    # Check first char
+    # Check second char
   end
 
   def not_diagonal?(ship, coords)
-    #make sure the return value wants to be true
+    # Make sure the return value wants to be true
   end
 
   def valid_placement?(ship, coords)
 
   end
 
+  private
+
+  def valid_coordinate_lengths?(coordinates)
+    coordinates.any { |coordinate| coordinate.length != 2 }
+  end
 end

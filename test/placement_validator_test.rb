@@ -22,4 +22,12 @@ class PlacementValidatorTest < MiniTest::Test
   def test_is_NOT_valid_length
     assert_equal false, @validator.is_valid_length?(@submarine,["A1","A2","A3"])
   end
+
+  def test_is_consecutive
+    assert_equal true, @validator.is_consecutive?(["A1", "A2", "A3"])
+  end
+
+  def test_is_not_consecutive
+    assert_equal true, @validator.is_consecutive?(["A1", "A3", "A4"])
+  end
 end
