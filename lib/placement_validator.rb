@@ -3,7 +3,7 @@ require './lib/board'
 class PlacementValidator
 
   def initialize
-    @board = Board.new
+    # @board = Board.new
   end
 
   def is_valid_length?(ship, coords)
@@ -48,11 +48,12 @@ class PlacementValidator
     range.each_cons(2).all? {|a , b| b == a+1}
   end
 
-  def not_overlapping?(coords)
-    coords.all? do |coordinate|
-      @board.cells[coordinate].empty?
-    end
-  end
+  # TODO IP: remove dependency refactor
+  # def not_overlapping?(coords)
+  #   coords.all? do |coordinate|
+  #     @board.cells[coordinate].empty?
+  #   end
+  # end
 
   def valid_placement?(ship, coords)
 

@@ -4,12 +4,27 @@ require './lib/ship'
 class Board
   attr_reader :cells
 
-  def initialize
+  def initialize(placement_validator)
     @cells = create_board
+    @placement_validator = placement_validator
   end
 
   def valid_coordinate?(coordinate)
     @cells.include? coordinate
+  end
+
+  def place(ship, coordinates)
+    cells_to_use = cells_from_coordinates(coordinates)
+
+    cells_to_use.each do |cell|
+      cell.place_ship(ship)
+    end
+  end
+
+  def cells_occupied?(proposed_cells)
+    proposed_cells.all? do |cell|
+      cell.empty?
+    end
   end
 
   private
@@ -25,5 +40,17 @@ class Board
 
     cells
   end
+
+  def cells_from_coordinates(coordinates)
+    # Coords is an array of "A1" and the like
+    # Need to return an array of actual Cell objects
+    cells_subset = []
+    coordinates.each do |coordinate|
+      cells_subset << @cells[coordinate]
+    end
+
+    cells_subset
+  end
+
 end
 
