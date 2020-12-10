@@ -14,7 +14,9 @@ class PlacementValidator
       numbers << char[1].to_i
       letters << char[0].ord
     end
-
+    is_identical?(numbers)&&
+    is_identical?(letters)&&
+    valid_coordinate_lengths?(coord_chars)
   end
 
   def is_identical?(range)
