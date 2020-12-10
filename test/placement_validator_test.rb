@@ -2,6 +2,7 @@ require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/cell'
 require './lib/ship'
+require './lib/board'
 require './lib/placement_validator'
 require 'pry'
 
@@ -10,6 +11,8 @@ class PlacementValidatorTest < MiniTest::Test
     @validator = PlacementValidator.new
     @cruiser = Ship.new("Cruiser", 3)
     @submarine = Ship.new("Submarine", 2)
+
+    @board = Board.new
   end
 
   def test_it_is
@@ -52,5 +55,11 @@ class PlacementValidatorTest < MiniTest::Test
     assert_equal false, @validator.not_diagonal?(["B2", "C3", "D4"])
     assert_equal false, @validator.not_diagonal?(["C2", "D3"])
     assert_equal false, @validator.not_diagonal?(["C2C", "DD3"])
+  end
+
+  def test_it_cannot_overlap
+    @validator.not_overlapping?(["A1", "A2", "A3"])
+
+    assert_equal false, @validator.not_overlapping?(["A1", "A2", "A3"])
   end
 end
