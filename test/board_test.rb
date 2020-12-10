@@ -2,12 +2,16 @@
 
 require 'minitest/autorun'
 require 'minitest/pride'
+require './lib/placement_validator'
 require './lib/board'
 require './lib/cell'
+require './lib/ship'
 
 class BoardTest < Minitest::Test
   def setup
-    @board = Board.new
+    placement_validator = PlacementValidator.new
+    @board = Board.new(placement_validator)
+    @cruiser =  Ship.new("Cruiser", 3)
   end
 
   def test_it_exists
@@ -32,5 +36,32 @@ class BoardTest < Minitest::Test
     coordinate = "X9"
 
     assert_equal false, @board.valid_coordinate?(coordinate)
+  end
+
+  def test_place_ship
+    a1 = @board.cells["A1"]
+    a2 = @board.cells["A2"]
+    a3 = @board.cells["A3"]
+
+    @board.place(@cruiser, ["A1", "A2", "A3"])
+
+    assert_equal @cruiser, a1.ship
+    assert_equal @cruiser, a2.ship
+    assert_equal @cruiser, a3.ship
+  end
+
+  def test_cells_occupied_true
+    @board.place(@cruiser, ["A1", "A2", "A3"])
+
+    assert_equal true, @board.cell_occupied?("A1")
+    assert_equal true, @board.cell_occupied?("A2")
+    assert_equal true, @board.cell_occupied?("A3")
+  end
+
+  def test_cells_occupied_false
+    @board.place(@cruiser, ["A1", "A2", "A3"])
+
+    assert_equal false, @board.cell_occupied?("A4")
+    assert_equal false, @board.cell_occupied?("B1")
   end
 end
