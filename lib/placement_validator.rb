@@ -28,7 +28,7 @@ class PlacementValidator
       numbers << char[1].to_i
       letters << char[0].ord
     end
-   
+    !(letters.uniq.count > 1 && numbers.uniq.count > 1 ) && valid_coordinate_lengths?(coord_chars)
   end
 
 
