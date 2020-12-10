@@ -25,8 +25,10 @@ class Cell
     @ship.hit unless empty?
   end
 
-  def render
-    if render_empty?
+  def render(override=false)
+    if override && !empty? && !fired_upon?
+      'S'
+    elsif render_empty?
       '.'
     elsif render_miss?
       'M'
