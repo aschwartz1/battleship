@@ -14,7 +14,15 @@ class PlacementValidator
       numbers << char[1].to_i
       letters << char[0].ord
     end
-    
+
+  end
+
+  def is_identical?(range)
+    if range.uniq.count == 1
+      true
+    else
+      is_range_consecutive?(range)
+    end
   end
 
 
