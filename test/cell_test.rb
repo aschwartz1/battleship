@@ -59,4 +59,9 @@ class ShipTest < MiniTest::Test
     assert_equal "X", @cell.render
   end
 
+  def test_render_optional_argument
+    @cell.place_ship(@cruiser)
+
+    assert_equal "S", @cell.render(true)
+  end
 end
