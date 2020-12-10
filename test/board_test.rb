@@ -50,31 +50,18 @@ class BoardTest < Minitest::Test
     assert_equal @cruiser, a3.ship
   end
 
-  # TODO IP: remove dependency refactor
   def test_cells_occupied_true
-    skip
-    # Get a ship placed on known cells
-    # Make array that overlaps w/ those cells
-    a1 = @board.cells["A1"]
-    a2 = @board.cells["A2"]
-    a3 = @board.cells["A3"]
-    cells = [a1, a2, a3]
+    @board.place(@cruiser, ["A1", "A2", "A3"])
 
-    # Do the assert
-    assert_equal true, @board.cells_occupied?(cells)
+    assert_equal true, @board.cell_occupied?("A1")
+    assert_equal true, @board.cell_occupied?("A2")
+    assert_equal true, @board.cell_occupied?("A3")
   end
 
   def test_cells_occupied_false
-    skip
-    # Get a ship placed on known cells
     @board.place(@cruiser, ["A1", "A2", "A3"])
-    # Make array that doesn't overlap w/ those cells
-    a1 = @board.cells["A1"]
-    a2 = @board.cells["A2"]
-    a3 = @board.cells["A3"]
-    cells = [a1, a2, a3]
 
-    # Do the assert
-    assert_equal false, @board.cells_occupied?(cells)
+    assert_equal false, @board.cell_occupied?("A4")
+    assert_equal false, @board.cell_occupied?("B1")
   end
 end

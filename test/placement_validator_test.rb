@@ -56,11 +56,4 @@ class PlacementValidatorTest < MiniTest::Test
     assert_equal false, @validator.not_diagonal?(["C2", "D3"])
     assert_equal false, @validator.not_diagonal?(["C2C", "DD3"])
   end
-
-  # TODO IP: remove dependency refactor
-  # def test_it_cannot_overlap
-  #   @validator.not_overlapping?(["A1", "A2", "A3"])
-
-  #   assert_equal false, @validator.not_overlapping?(["A1", "A2", "A3"])
-  # end
 end

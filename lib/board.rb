@@ -21,10 +21,8 @@ class Board
     end
   end
 
-  def cells_occupied?(proposed_cells)
-    proposed_cells.all? do |cell|
-      cell.empty?
-    end
+  def cell_occupied?(coordinate)
+    !cell_from_coordinate(coordinate).empty?
   end
 
   private
@@ -52,5 +50,8 @@ class Board
     cells_subset
   end
 
+  def cell_from_coordinate(coordinate)
+    @cells[coordinate]
+  end
 end
 
