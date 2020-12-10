@@ -64,4 +64,26 @@ class BoardTest < Minitest::Test
     assert_equal false, @board.cell_occupied?("A4")
     assert_equal false, @board.cell_occupied?("B1")
   end
+
+  def test_render_empty
+    expected =  "  1 2 3 4 \n" +
+                "A . . . . \n" +
+                "B . . . . \n" +
+                "C . . . . \n" +
+                "D . . . . "
+
+    assert_equal expected, @board.render
+  end
+
+  def test_render_override
+    @board.place(@cruiser, ["C2", "C3", "C4"])
+
+    expected =  "  1 2 3 4 \n" +
+                "A . . . . \n" +
+                "B . . . . \n" +
+                "C . S S S \n" +
+                "D . . . . "
+
+    assert_equal expected, @board.render(true)
+  end
 end
