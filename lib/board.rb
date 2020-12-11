@@ -25,7 +25,42 @@ class Board
     !cell_from_coordinate(coordinate).empty?
   end
 
+  def render(override=false)
+    prev_row_char = ""
+    render_string = ""
+    pad = " "
+    newline = "\n"
+
+    # Statically type out first row
+    render_string = "#{pad * 2}1#{pad}2#{pad}3#{pad}4 "
+
+    # Dynamically build rest of rows
+    @cells.each do |coord, cell|
+
+      # First part of coordinate determines our row
+      curr_row_char = coord[0]
+      cell_render = cell.render(override)
+
+      # First time on this row, add row header and padding
+      if curr_row_char != prev_row_char
+        render_string += "#{newline}#{curr_row_char}#{pad}"
+      end
+
+      # All passes through loop, add the cell's render
+      render_string += "#{cell_render}#{pad}"
+
+      # Keep track of the row char so we know when it changes
+      prev_row_char = curr_row_char
+    end
+
+    render_string
+  end
+
   private
+
+  def render_row(rowchar, cells)
+
+  end
 
   def create_board
     cells = Hash.new
