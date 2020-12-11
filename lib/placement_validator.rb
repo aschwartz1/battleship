@@ -2,10 +2,6 @@ require './lib/ship'
 require './lib/board'
 class PlacementValidator
 
-  def initialize
-    # @board = Board.new
-  end
-
   def is_valid_length?(ship, coords)
     ship.length == coords.count
   end
@@ -49,7 +45,10 @@ class PlacementValidator
   end
 
   def valid_placement?(ship, coords)
-
+    is_valid_length?(ship, coords)&&
+    is_consecutive?(coords)&&
+    not_diagonal?(coords)&&
+    coords.uniq.count !=1
   end
 
   private
