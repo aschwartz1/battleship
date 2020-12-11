@@ -9,15 +9,13 @@ class Board
     @placement_validator = placement_validator
   end
 
-  def valid_coordinate?(coordinate)
-    @cells.include? coordinate
-  end
-
   def place(ship, coordinates)
-    cells_to_use = cells_from_coordinates(coordinates)
+    if valid_placement?(ship, coordinates)
+      cells_to_use = cells_from_coordinates(coordinates)
 
-    cells_to_use.each do |cell|
-      cell.place_ship(ship)
+      cells_to_use.each do |cell|
+        cell.place_ship(ship)
+      end
     end
   end
 
@@ -56,10 +54,25 @@ class Board
     render_string
   end
 
+  def coordinate_exists_on_board?(coordinate)
+    @cells.include? coordinate
+  end
+
   private
 
-  def render_row(rowchar, cells)
+  def valid_placement?(ship, coordinates)
+    board_problem = coordinates.any? do |coord|
+                      !coordinate_exists_on_board?(coord) || cell_occupied?(coord)
+                    end
 
+    coordinate_problem = !@placement_validator.validate(ship, coordinates)
+
+    !(board_problem || coordinate_problem)
+
+    # Another possible implementation below?
+    # return false if coordinates.any? { |coord| !coordinate_exists_on_board?(coord) || cell_occupied?(coord) }
+    # return false if !placement_validator.validate(ship, coordinates)
+    # true
   end
 
   def create_board
