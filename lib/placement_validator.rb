@@ -1,8 +1,15 @@
 require './lib/ship'
 require './lib/board'
 class PlacementValidator
+  def validate(ship, coordinates)
+    return false if !valid_coordinate_formats?(coordinates)
+    return false if !coordinates_match_ship_length?(ship, coordinates)
+    return false if !is_consecutive?(coordinates)
+    return false if is_diagonal?(coordinates)
+    true
+  end
 
-  def is_valid_length?(ship, coords)
+  def coordinates_match_ship_length?(ship, coords)
     ship.length == coords.count
   end
 
@@ -15,12 +22,11 @@ class PlacementValidator
       numbers << char[1].to_i
       letters << char[0].ord
     end
-    is_identical?(numbers)&&
-    is_identical?(letters)&&
-    valid_coordinate_lengths?(coord_chars)
+
+    is_identical?(numbers) && is_identical?(letters)
   end
 
-  def not_diagonal?(coords)
+  def is_diagonal?(coords)
     coord_chars = coords.map(&:chars)
     numbers = []
     letters = []
@@ -29,7 +35,8 @@ class PlacementValidator
       numbers << char[1].to_i
       letters << char[0].ord
     end
-    !(letters.uniq.count > 1 && numbers.uniq.count > 1 ) && valid_coordinate_lengths?(coord_chars)
+
+    letters.uniq.count > 1 && numbers.uniq.count > 1
   end
 
   def is_identical?(range)
@@ -39,21 +46,12 @@ class PlacementValidator
       is_range_consecutive?(range)
     end
   end
-  # Possibly?
+
   def is_range_consecutive?(range)
-    range.each_cons(2).all? {|a , b| b == a+1}
+    range.each_cons(2).all? { |a , b| b == a + 1 }
   end
 
-  def valid_placement?(ship, coords)
-    is_valid_length?(ship, coords)&&
-    is_consecutive?(coords)&&
-    not_diagonal?(coords)&&
-    coords.uniq.count !=1
-  end
-
-  private
-
-  def valid_coordinate_lengths?(coordinates)
+  def valid_coordinate_formats?(coordinates)
     coordinates.all? { |coordinate| coordinate.length == 2 }
   end
 end
