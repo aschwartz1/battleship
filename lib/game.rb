@@ -13,20 +13,30 @@ class Game
 
   def start
     puts "Welcome to Battleship!\n"
-    puts "Enter the squares for the Cruiser (3 spaces)"
     puts @player_board.render
-    player_cruiser_coords = valid_player_cruiser_placement
+    player_cruiser_coords = get_player_placement(@cruiser)
+    player_sub_coords = get_player_placement(@submarine)
+    binding.pry
     cpu_cruiser_coords = valid_cpu_cruiser_placement
 
   end
 
-  def valid_player_cruiser_placement
-    player_cruiser = gets.chomp.to_s.upcase.split(" ")
-    until @player_board.placement_validator.valid_placement?(@cruiser, player_cruiser)
-      puts "Thats an incorrect choice\n"
-      player_cruiser = gets.chomp.to_s.upcase.split(" ")
+  def player_in
+    gets.chomp.to_s.upcase.split(" ")
+  end
+
+  def get_player_placement(ship)
+    puts "Enter #{ship.length} spaces for you #{ship.name}"
+    loop do
+      coord_input = player_in
+      message = @player_board.place(ship, coord_input)
+      if message == ""
+        break
+      else
+        puts "Thats an incorrect choice\n"
+      end
+
     end
-    player_cruiser
   end
 
   def cpu_random_coordinate
@@ -35,7 +45,7 @@ class Game
 
   def valid_cpu_cruiser_placement
     coordinate_check = ["#{cpu_random_coordinate}" ,"#{cpu_random_coordinate}","#{cpu_random_coordinate}" ]
-    until @player_board.placement_validator.valid_placement?(@cruiser, coordinate_check)
+    until @cpu_board.placement_validator.validate(@cruiser, coordinate_check)
       coordinate_check = ["#{cpu_random_coordinate}" ,"#{cpu_random_coordinate}","#{cpu_random_coordinate}" ]
     end
     coordinate_check
