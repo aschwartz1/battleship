@@ -17,7 +17,7 @@ class Game
     puts @player_board.render
     player_cruiser_coords = valid_player_cruiser_placement
     cpu_cruiser_coords = valid_cpu_cruiser_placement
-    binding.pry
+
   end
 
   def valid_player_cruiser_placement
@@ -29,5 +29,18 @@ class Game
     player_cruiser
   end
 
+  def cpu_random_coordinate
+    (["A", "B", "C", "D"].shuffle)[rand(0..3)] + rand(1..4).to_s
+  end
+
+  def valid_cpu_cruiser_placement
+    coordinate_check = ["#{cpu_random_coordinate}" ,"#{cpu_random_coordinate}","#{cpu_random_coordinate}" ]
+    until @player_board.placement_validator.valid_placement?(@cruiser, coordinate_check)
+      coordinate_check = ["#{cpu_random_coordinate}" ,"#{cpu_random_coordinate}","#{cpu_random_coordinate}" ]
+    end
+    coordinate_check
+    #some code here for either shooting in the dark
+    # or generating only valid coordinates
+  end
 
 end
