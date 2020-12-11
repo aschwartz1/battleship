@@ -11,13 +11,19 @@ class Board
   end
 
   def place(ship, coordinates)
+    error_message = ""
+
     if valid_placement?(ship, coordinates)
       cells_to_use = cells_from_coordinates(coordinates)
 
       cells_to_use.each do |cell|
         cell.place_ship(ship)
       end
+    else
+      error_message = "#{ship} couldn't be placed."
     end
+
+    error_message
   end
 
   def cell_occupied?(coordinate)
