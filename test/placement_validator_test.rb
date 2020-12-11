@@ -40,29 +40,40 @@ class PlacementValidatorTest < MiniTest::Test
   end
 
   def test_is_consecutive
-    assert_equal true, @validator.is_consecutive?(["A1", "A2", "A3"])
-    assert_equal true, @validator.is_consecutive?(["A1", "A2"])
-    assert_equal true, @validator.is_consecutive?(["B1", "C1", "D1"])
-    assert_equal true, @validator.is_consecutive?(["B1", "B2", "B3"])
-    assert_equal true, @validator.is_consecutive?(["D2", "D3", "D4"])
+    assert_equal true, @validator.coordinates_are_consecutive?(["A1", "A2", "A3"])
+    assert_equal true, @validator.coordinates_are_consecutive?(["A1", "A2"])
+    assert_equal true, @validator.coordinates_are_consecutive?(["B1", "C1", "D1"])
+    assert_equal true, @validator.coordinates_are_consecutive?(["B1", "B2", "B3"])
+    assert_equal true, @validator.coordinates_are_consecutive?(["D2", "D3", "D4"])
   end
 
   def test_is_not_consecutive
-    assert_equal false, @validator.is_consecutive?(["A1", "A3", "A4"])
-    assert_equal false, @validator.is_consecutive?(["A1", "A1", "A4"])
-    assert_equal false, @validator.is_consecutive?(["A1", "C1"])
-    assert_equal false, @validator.is_consecutive?(["A3", "A2", "A1"])
+    # Random coords (aka, not consecutive)
+    assert_equal false, @validator.coordinates_are_consecutive?(["A1", "A3", "A4"])
+    assert_equal false, @validator.coordinates_are_consecutive?(["A1", "A1", "A4"])
+    assert_equal false, @validator.coordinates_are_consecutive?(["A1", "C1"])
+    # All coords are the same
+    assert_equal false, @validator.coordinates_are_consecutive?(["A1", "A1", "A1"])
+    # Reversed
+    assert_equal false, @validator.coordinates_are_consecutive?(["A3", "A2", "A1"])
+    # Diagonal
+    assert_equal false, @validator.coordinates_are_consecutive?(["A1", "B2", "C3"])
+    assert_equal false, @validator.coordinates_are_consecutive?(["C2", "D3"])
   end
 
-  def test_it_is_diagonal
-    assert_equal true, @validator.is_diagonal?(["A1", "B2", "C3"])
-    assert_equal true, @validator.is_diagonal?(["B2", "C3", "D4"])
-    assert_equal true, @validator.is_diagonal?(["C2", "D3"])
+  def test_is_identical_true
+    assert_equal true, @validator.is_identical?(["A".ord, "A".ord, "A".ord])
   end
 
-  def test_it_is_not_diagonal
-    assert_equal false, @validator.is_diagonal?(["A1", "A3", "A4"])
-    assert_equal false, @validator.is_diagonal?(["A1", "C1"])
-    assert_equal false, @validator.is_diagonal?(["A3", "A2", "A1"])
+  def test_is_identical_false
+    assert_equal false, @validator.is_identical?(["A".ord, "B".ord, "C".ord])
+  end
+
+  def test_is_range_consecutive_true
+    assert_equal true, @validator.is_range_consecutive?(["A".ord, "B".ord, "C".ord])
+  end
+
+  def test_is_range_consecutive_false
+    assert_equal false, @validator.is_range_consecutive?(["D".ord, "B".ord, "A".ord])
   end
 end
