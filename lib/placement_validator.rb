@@ -1,11 +1,6 @@
 require './lib/ship'
 require './lib/board'
 class PlacementValidator
-
-  def initialize
-    # @board = Board.new
-  end
-
   def validate(ship, coordinates)
     return false if !valid_coordinate_formats?(coordinates)
     return false if !coordinates_match_ship_length?(ship, coordinates)

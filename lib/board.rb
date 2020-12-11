@@ -2,7 +2,8 @@ require './lib/cell'
 require './lib/ship'
 
 class Board
-  attr_reader :cells
+  attr_reader :cells,
+              :placement_validator
 
   def initialize(placement_validator)
     @cells = create_board
