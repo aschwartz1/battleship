@@ -20,21 +20,23 @@ class Turn
   def player_shot
     puts "Which cell would you like to fire on"
     player_target = gets.chomp.to_s.upcase
-    until @cpu_board.coordinate_exists_on_board?(player_target) && !@player_board.blacklist.include?(player_target)
+    until @cpu_board.coordinate_exists_on_board?(player_target) && !@cpu_board.coordinate_already_fired_upon?(player_target)
       puts "Invalid target"
       player_target = gets.chomp.to_s.upcase
     end
-    @cpu_board.cells[player_target].fire_upon
-    @player_board.blacklist << player_target
+    @cpu_board.fire_upon(player_target)
+    # @cpu_board.cells[player_target].fire_upon
+    # @player_board.blacklist << player_target
   end
 
   def cpu_shot
     cpu_target = cpu_random_coordinate
-    until @player_board.coordinate_exists_on_board?(cpu_target) && !@cpu_board.blacklist.include?(cpu_target)
+    until @player_board.coordinate_exists_on_board?(cpu_target) && !@player_board.coordinate_already_fired_upon?(cpu_target)
       cpu_target = cpu_random_coordinate
     end
-    @player_board.cells[cpu_target].fire_upon
-    @cpu_board.blacklist << cpu_target
+    @player_board.fire_upon(cpu_target)
+    # @player_board.cells[cpu_target].fire_upon
+    # @cpu_board.blacklist << cpu_target
   end
 
   def cpu_random_coordinate
