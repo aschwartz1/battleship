@@ -21,8 +21,10 @@ class Cell
   end
 
   def fire_upon
-    @fired_upon = true
-    @ship.hit unless empty?
+    if !fired_upon?
+      @fired_upon = true
+      @ship.hit unless empty?
+    end
   end
 
   def render(override=false)
