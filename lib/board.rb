@@ -3,11 +3,13 @@ require './lib/ship'
 
 class Board
   attr_reader :cells,
-              :placement_validator
+              :placement_validator,
+              :blacklist
 
   def initialize(placement_validator)
     @cells = create_board
     @placement_validator = placement_validator
+    @blacklist = []
   end
 
   def place(ship, coordinates)
@@ -24,6 +26,31 @@ class Board
     end
 
     error_message
+  end
+
+  def cpu_place(ship,coordinates)
+
+    if valid_placement?(ship, coordinates)
+      cells_to_use = cells_from_coordinates(coordinates)
+
+      cells_to_use.each do |cell|
+        cell.place_ship(ship)
+      end
+    else
+      false
+    end
+  end
+
+  def has_lost?
+    all_ships = @cells.find_all do |coord,cell|
+      !cell.empty?
+    end
+    only_ships = all_ships.map do |pair|
+      pair[1]
+    end
+    only_ships.all? do |cell|
+      cell.ship.sunk?
+    end
   end
 
   def cell_occupied?(coordinate)
