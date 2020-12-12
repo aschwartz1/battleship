@@ -92,7 +92,21 @@ class Board
     @cells.include? coordinate
   end
 
+  def fire_upon(coordinate)
+    # TODO validate coord w/ `coordinate_exists_on_board?(coordinate)`?
+    @cells[coordinate].fire_upon
+    add_to_blacklist(coordinate)
+  end
+
+  def coordinate_has_been_fired_upon?(coordinate)
+    @blacklist.include? coordinate
+  end
+
   private
+
+  def add_to_blacklist(coordinate)
+    @blacklist << coordinate
+  end
 
   def valid_placement?(ship, coordinates)
     board_problem = coordinates.any? do |coord|
