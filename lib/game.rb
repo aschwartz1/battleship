@@ -51,18 +51,7 @@ class Game
       continue?
     end
   end
-
-  def input_validate(expected)
-    actual = player_in
-
-    until actual[0] == expected
-      puts 'Invalid input, try again!'
-      actual = player_in
-    end
-    actual
-  end
-
-
+  
   def game_over?
     cpu_win? || player_win?
   end
