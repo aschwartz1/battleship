@@ -45,8 +45,12 @@ class Turn
   end
 
   def game_state
+    puts "PLAYER BOARD"
+    puts "==================="
     puts @player_board.render(true)
-    puts @cpu_board.render(true)
+    puts "CPU BOARD"
+    puts "==================="
+    puts @cpu_board.render
   end
 
 end

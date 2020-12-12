@@ -31,6 +31,8 @@ class Game
       elsif player_win?
         puts 'You won!'
       end
+      #Board stil persists after game ends, need to wipe board after every game.
+
       start
     else
       puts "Goodbye!"
