@@ -96,11 +96,11 @@ class BoardTest < Minitest::Test
     assert_equal true, cell.fired_upon?
   end
 
-  def test_coordinate_has_been_fired_upon
+  def test_coordinate_already_fired_upon
     coordinate = "A1"
 
-    assert_equal false, @board.coordinate_has_been_fired_upon?(coordinate)
+    assert_equal false, @board.coordinate_already_fired_upon?(coordinate)
     @board.fire_upon(coordinate)
-    assert_equal true, @board.coordinate_has_been_fired_upon?(coordinate)
+    assert_equal true, @board.coordinate_already_fired_upon?(coordinate)
   end
 end

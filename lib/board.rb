@@ -98,7 +98,7 @@ class Board
     add_to_blacklist(coordinate)
   end
 
-  def coordinate_has_been_fired_upon?(coordinate)
+  def coordinate_already_fired_upon?(coordinate)
     @blacklist.include? coordinate
   end
 
