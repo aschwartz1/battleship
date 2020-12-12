@@ -28,8 +28,14 @@ class Cell
   end
 
   def render(override=false)
-    if override && !empty? && !fired_upon?
+    # if override && !empty? && !fired_upon?
+    #   'S'
+    # if ship_present?
+    #   override ? 'S' : '.'
+    if hidden_ship_present? && override
       'S'
+    elsif hidden_ship_present? && !override
+      '.'
     elsif render_empty?
       '.'
     elsif render_miss?
@@ -39,11 +45,16 @@ class Cell
     elsif render_hit?
       'H'
     else
+      require "pry"; binding.pry
       "Something went wrong!"
     end
   end
 
   private
+
+  def hidden_ship_present?
+    !empty? && !fired_upon?
+  end
 
   def render_sunk?
     !empty? && @ship.sunk?
