@@ -16,3 +16,8 @@ class Ship
     @health -= 1 unless sunk?
   end
 end
+
+#ship is alive with full hp
+# ship is shot upon
+# health goes down (renders h)
+# ship

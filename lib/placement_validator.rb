@@ -22,7 +22,7 @@ class PlacementValidator
     numbers = []
     letters = []
 
-    coord_chars.map do |char|
+    coord_chars.each do |char|
       numbers << char[1].to_i
       letters << char[0].ord
     end
