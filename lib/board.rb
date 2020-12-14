@@ -93,9 +93,10 @@ class Board
   end
 
   def fire_upon(coordinate)
-    # TODO validate coord w/ `coordinate_exists_on_board?(coordinate)`?
-    @cells[coordinate].fire_upon
+    shot_message = @cells[coordinate].fire_upon
     add_to_blacklist(coordinate)
+
+    shot_message
   end
 
   def coordinate_already_fired_upon?(coordinate)
