@@ -31,12 +31,23 @@ class Game
       elsif player_win?
         puts 'You won!'
       end
-      #Board stil persists after game ends, need to wipe board after every game.
 
+      new_game
       start
     else
       puts "Goodbye!"
     end
+  end
+
+  def new_game
+    @cpu_cruiser = Ship.new('Cruiser', 3)
+    @cpu_submarine = Ship.new('Submarine', 2)
+
+    @player_cruiser = Ship.new('Cruiser', 3)
+    @player_submarine = Ship.new('Submarine', 2)
+
+    @player_board.clear_board
+    @cpu_board.clear_board
   end
 
   def continue?

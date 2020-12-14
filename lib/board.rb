@@ -103,6 +103,11 @@ class Board
     @blacklist.include? coordinate
   end
 
+  def clear_board
+    @cells = create_board
+    @blacklist = []
+  end
+
   private
 
   def add_to_blacklist(coordinate)
