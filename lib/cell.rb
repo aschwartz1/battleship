@@ -21,17 +21,19 @@ class Cell
   end
 
   def fire_upon
+    shot_message = ""
+
     if !fired_upon?
       @fired_upon = true
       @ship.hit unless empty?
+
+      shot_message = get_shot_message
     end
+
+    shot_message
   end
 
   def render(override=false)
-    # if override && !empty? && !fired_upon?
-    #   'S'
-    # if ship_present?
-    #   override ? 'S' : '.'
     if hidden_ship_present? && override
       'S'
     elsif hidden_ship_present? && !override
@@ -45,12 +47,21 @@ class Cell
     elsif render_hit?
       'H'
     else
-      require "pry"; binding.pry
       "Something went wrong!"
     end
   end
 
   private
+
+  def get_shot_message
+      if !empty? && !@ship.sunk?
+        "shot on #{coordinate} was a hit!"
+      elsif !empty? && @ship.sunk?
+        "shot on #{coordinate} sunk a #{@ship.name}!"
+      else
+        "shot on #{coordinate} was a miss."
+      end
+  end
 
   def hidden_ship_present?
     !empty? && !fired_upon?

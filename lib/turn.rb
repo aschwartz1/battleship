@@ -11,32 +11,38 @@ class Turn
 
   def play
     puts game_state
-    player_shot
-    cpu_shot
-    puts "Your shot was whatever"
-    puts "my shot was whatever"
+
+    player_result = player_shot
+    cpu_result = cpu_shot
+
+    puts player_result
+    puts cpu_result
   end
 
   def player_shot
-    puts "Which cell would you like to fire on"
+    puts "Which cell would you like to fire on?"
     player_target = gets.chomp.to_s.upcase
+
     until @cpu_board.coordinate_exists_on_board?(player_target) && !@cpu_board.coordinate_already_fired_upon?(player_target)
-      puts "Invalid target"
+      puts "Please enter a valid coordinate."
       player_target = gets.chomp.to_s.upcase
     end
-    @cpu_board.fire_upon(player_target)
-    # @cpu_board.cells[player_target].fire_upon
-    # @player_board.blacklist << player_target
+
+    shot_message = @cpu_board.fire_upon(player_target)
+
+    "Your #{shot_message}"
   end
 
   def cpu_shot
     cpu_target = cpu_random_coordinate
+
     until @player_board.coordinate_exists_on_board?(cpu_target) && !@player_board.coordinate_already_fired_upon?(cpu_target)
       cpu_target = cpu_random_coordinate
     end
-    @player_board.fire_upon(cpu_target)
-    # @player_board.cells[cpu_target].fire_upon
-    # @cpu_board.blacklist << cpu_target
+
+    shot_message = @player_board.fire_upon(cpu_target)
+
+    "My #{shot_message}"
   end
 
   def cpu_random_coordinate
@@ -52,5 +58,4 @@ class Turn
     puts "==================="
     puts @cpu_board.render
   end
-
 end
