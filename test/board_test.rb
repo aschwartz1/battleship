@@ -3,6 +3,7 @@
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/placement_validator'
+require 'pry'
 require './lib/board'
 require './lib/cell'
 require './lib/ship'
@@ -11,7 +12,8 @@ class BoardTest < Minitest::Test
   def setup
     placement_validator = PlacementValidator.new
     @board = Board.new(placement_validator)
-    @cruiser =  Ship.new("Cruiser", 3)
+    @cruiser = Ship.new("Cruiser", 3)
+    @submarine = Ship.new("Submarine", 2)
   end
 
   def test_it_exists
@@ -22,8 +24,7 @@ class BoardTest < Minitest::Test
     cells_hash = @board.cells
 
     # Cell objects can change, so assert other info about the hash
-    assert_equal 16, cells_hash.length
-    assert_equal 16, cells_hash.select { |k, v| v.is_a? Cell }.length
+    assert_equal true, (cells_hash.values.all? { |cell| cell.is_a? Cell })
   end
 
   def test_coordinate_exists
@@ -103,4 +104,44 @@ class BoardTest < Minitest::Test
     @board.fire_upon(coordinate)
     assert_equal true, @board.coordinate_already_fired_upon?(coordinate)
   end
+
+  def test_cpu_placement
+    a1 = @board.cells["A1"]
+    a2 = @board.cells["A2"]
+    a3 = @board.cells["A3"]
+
+    @board.cpu_place(@cruiser, ["A1", "A2", "A3"])
+
+    assert_equal @cruiser, a1.ship
+    assert_equal @cruiser, a2.ship
+    assert_equal @cruiser, a3.ship
+  end
+
+
+  def test_has_lost_returns_false
+    @board.place(@cruiser, ["A1","A2","A3"])
+    @board.place(@submarine,["B1","B2"])
+
+    assert_equal false, @board.has_lost?
+  end
+
+  def test_has_lost_returns_true
+    cruiser = Ship.new("Cruiser", 0)
+    submarine = Ship.new("Submarine", 0)
+
+    @board.place(cruiser, ["A1","A2","A3"])
+    @board.place(submarine,["B1","B2"])
+
+    assert_equal true, @board.has_lost?
+  end
+
+  def test_it_can_clear_the_board
+    @board.place(@cruiser, ["A1","A2","A3"])
+    @board.clear_board
+
+    # Cell objects can change, so assert other info about the hash
+    assert_equal true, (@board.cells.values.all? { |cell| cell.is_a? Cell })
+    assert_equal true, @board.cells.values.all?(&:empty?)
+  end
+
 end
