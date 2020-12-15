@@ -27,7 +27,7 @@ class Board
 
     error_message
   end
-  #TODO: Test cpu_placement
+
   def cpu_place(ship,coordinates)
 
     if valid_placement?(ship, coordinates)
@@ -40,15 +40,13 @@ class Board
       false
     end
   end
-  #TODO: Test people can lose
+
   def has_lost?
-    all_ships = @cells.find_all do |coord,cell|
+    all_ships = @cells.values.find_all do |cell|
       !cell.empty?
     end
-    only_ships = all_ships.map do |pair|
-      pair[1]
-    end
-    only_ships.all? do |cell|
+
+    all_ships.all? do |cell|
       cell.ship.sunk?
     end
   end
@@ -102,7 +100,7 @@ class Board
   def coordinate_already_fired_upon?(coordinate)
     @blacklist.include? coordinate
   end
-  #TODO: Test clearing the board
+
   def clear_board
     @cells = create_board
     @blacklist = []
@@ -115,18 +113,9 @@ class Board
   end
   #TODO: Test valid placement
   def valid_placement?(ship, coordinates)
-    board_problem = coordinates.any? do |coord|
-                      !coordinate_exists_on_board?(coord) || cell_occupied?(coord)
-                    end
-
-    coordinate_problem = !@placement_validator.validate(ship, coordinates)
-
-    !(board_problem || coordinate_problem)
-
-    # Another possible implementation below?
-    # return false if coordinates.any? { |coord| !coordinate_exists_on_board?(coord) || cell_occupied?(coord) }
-    # return false if !placement_validator.validate(ship, coordinates)
-    # true
+    return false if coordinates.any? { |coord| !coordinate_exists_on_board?(coord) || cell_occupied?(coord) }
+    return false if !placement_validator.validate(ship, coordinates)
+    true
   end
 
   def create_board
