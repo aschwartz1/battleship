@@ -16,7 +16,6 @@ class Game
   end
 
   def start
-
     if continue?
       puts @player_board.render(true)
 
@@ -64,7 +63,7 @@ class Game
       continue?
     end
   end
-  
+
   def game_over?
     cpu_win? || player_win?
   end
