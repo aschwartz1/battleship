@@ -22,7 +22,7 @@ class Turn
   def player_shot
     puts "Which cell would you like to fire on?"
     player_target = gets.chomp.to_s.upcase
-
+    # TODO: Prompt for already fired upon
     until @cpu_board.coordinate_exists_on_board?(player_target) && !@cpu_board.coordinate_already_fired_upon?(player_target)
       puts "Please enter a valid coordinate."
       player_target = gets.chomp.to_s.upcase
@@ -51,11 +51,14 @@ class Turn
   end
 
   def game_state
+    puts " "
     puts "PLAYER BOARD"
     puts "==================="
     puts @player_board.render(true)
+    puts " "
     puts "CPU BOARD"
     puts "==================="
     puts @cpu_board.render
+    puts " "
   end
 end

@@ -27,7 +27,7 @@ class Board
 
     error_message
   end
-
+  #TODO: Test cpu_placement
   def cpu_place(ship,coordinates)
 
     if valid_placement?(ship, coordinates)
@@ -40,7 +40,7 @@ class Board
       false
     end
   end
-
+  #TODO: Test people can lose
   def has_lost?
     all_ships = @cells.find_all do |coord,cell|
       !cell.empty?
@@ -102,13 +102,18 @@ class Board
   def coordinate_already_fired_upon?(coordinate)
     @blacklist.include? coordinate
   end
+  #TODO: Test clearing the board
+  def clear_board
+    @cells = create_board
+    @blacklist = []
+  end
 
   private
-
+  #TODO: Test blacklist
   def add_to_blacklist(coordinate)
     @blacklist << coordinate
   end
-
+  #TODO: Test valid placement
   def valid_placement?(ship, coordinates)
     board_problem = coordinates.any? do |coord|
                       !coordinate_exists_on_board?(coord) || cell_occupied?(coord)
@@ -146,7 +151,7 @@ class Board
 
     cells_subset
   end
-
+  #TODO: Test query cell from coordinates
   def cell_from_coordinate(coordinate)
     @cells[coordinate]
   end
