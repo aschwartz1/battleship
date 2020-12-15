@@ -16,7 +16,6 @@ class Game
   end
 
   def start
-
     if continue?
       puts @player_board.render(true)
 
@@ -64,7 +63,7 @@ class Game
       continue?
     end
   end
-  
+
   def game_over?
     cpu_win? || player_win?
   end
@@ -111,7 +110,6 @@ class Game
     until @cpu_board.cpu_place(@cpu_submarine, coordinate_check)
       coordinate_check = ["#{cpu_random_coordinate}" ,"#{cpu_random_coordinate}"]
     end
-    #REWORK
   end
 
 end
