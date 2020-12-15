@@ -110,7 +110,6 @@ class Game
     until @cpu_board.cpu_place(@cpu_submarine, coordinate_check)
       coordinate_check = ["#{cpu_random_coordinate}" ,"#{cpu_random_coordinate}"]
     end
-    #REWORK
   end
 
 end

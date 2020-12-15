@@ -76,8 +76,50 @@ class GameTest < MiniTest::Test
 
     assert_equal true, @game.player_win?
   end
+
+  def test_cpu_generates_random_coordinates
+    3.times do
+      coordinate = @game.cpu_random_coordinate
+
+      assert_equal 2, coordinate.length
+      assert_equal true, ('A'..'D').include?(coordinate[0])
+      assert_equal true, (1..4).include?(coordinate[1].to_i)
+    end
+  end
+
+  def test_cpu_can_place_cruiser
+    @game.valid_cpu_cruiser_placement
+
+    cells_with_cruisers = @cpu_board.cells.values.select do |cell|
+      if !cell.empty?
+        cell.ship.name == @cruiser.name
+      else
+        false
+      end
+    end
+
+    assert_equal true, cells_with_cruisers.all? { |cell| cell.ship.is_a? Ship }
+    assert_equal 3, cells_with_cruisers.length
+  end
+
+  def test_cpu_can_place_submarine
+    @game.valid_cpu_sub_placement
+
+    cells_with_subs = @cpu_board.cells.values.select do |cell|
+      if !cell.empty?
+        cell.ship.name == @submarine.name
+      else
+        false
+      end
+    end
+
+    assert_equal true, cells_with_subs.all? { |cell| cell.ship.is_a? Ship }
+    assert_equal 2, cells_with_subs.length
+  end
 end
 
-# start requires user input
-# continue? requires user input
-#
+# Requires user input:
+#  - start
+#  - continue?
+#  - player_in
+#  - get_player_placement
