@@ -106,14 +106,14 @@ class Board
     @blacklist = []
   end
 
-  private
-  #TODO: Test blacklist
   def add_to_blacklist(coordinate)
     @blacklist << coordinate
   end
-  #TODO: Test valid placement
+
   def valid_placement?(ship, coordinates)
-    return false if coordinates.any? { |coord| !coordinate_exists_on_board?(coord) || cell_occupied?(coord) }
+    return false if coordinates.any? do |coord|
+      !coordinate_exists_on_board?(coord) || cell_occupied?(coord)
+    end
     return false if !placement_validator.validate(ship, coordinates)
     true
   end
@@ -140,7 +140,7 @@ class Board
 
     cells_subset
   end
-  #TODO: Test query cell from coordinates
+
   def cell_from_coordinate(coordinate)
     @cells[coordinate]
   end

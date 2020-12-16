@@ -24,6 +24,7 @@ class Game
       valid_cpu_cruiser_placement
       valid_cpu_sub_placement
       @turn.play until game_over?
+      
 
       if cpu_win?
         puts 'You lost!'
