@@ -77,16 +77,6 @@ class GameTest < MiniTest::Test
     assert_equal true, @game.player_win?
   end
 
-  def test_cpu_generates_random_coordinates
-    3.times do
-      coordinate = @game.cpu_random_coordinate
-
-      assert_equal 2, coordinate.length
-      assert_equal true, ('A'..'D').include?(coordinate[0])
-      assert_equal true, (1..4).include?(coordinate[1].to_i)
-    end
-  end
-
   def test_cpu_can_place_cruiser
     @game.valid_cpu_cruiser_placement
 
