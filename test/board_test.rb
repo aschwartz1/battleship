@@ -144,4 +144,34 @@ class BoardTest < Minitest::Test
     assert_equal true, @board.cells.values.all?(&:empty?)
   end
 
+  def test_adds_fired_to_blacklist
+    @board.fire_upon("A1")
+    assert_equal ["A1"], @board.blacklist
+  end
+
+  def test_it_can_validate_placement
+    assert_equal false, @board.valid_placement?(@cruiser, ["A5","A6","A7"])
+  end
+
+  def test_can_create_board
+    @board.create_board
+    assert_equal 16, @board.cells.length
+    assert_equal true, (@board.cells.values.all? { |cell| cell.is_a? Cell })
+    assert_equal true, (@board.cells.keys.all? { |coord| coord.is_a? String })
+  end
+
+  def test_can_return_cells_from_coordinates
+    expected_coordinates = ["A1","A2","A3"]
+    cell_objects = @board.cells_from_coordinates(expected_coordinates)
+
+    actual_coordinates = cell_objects.map do |cell|
+      cell.coordinate
+    end
+
+    assert_equal expected_coordinates, actual_coordinates
+  end
+
+  def test_can_return_a_cell_from_coordinate
+    assert_equal @board.cells["A1"], @board.cell_from_coordinate("A1")
+  end
 end
