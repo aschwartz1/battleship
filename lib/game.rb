@@ -23,20 +23,38 @@ class Game
       get_player_placement(@player_submarine)
       valid_cpu_cruiser_placement
       valid_cpu_sub_placement
-      @turn.play until game_over?
-      
+
+      until game_over?
+        @turn.play
+      end
 
       if cpu_win?
-        puts 'You lost!'
+        puts "I win!"
       elsif player_win?
-        puts 'You won!'
+        puts "You Win!"
       end
+
+      puts @turn.game_state
 
       new_game
       start
+
     else
       puts "Goodbye!"
     end
+  end
+
+
+  def game_over?
+    cpu_win? || player_win?
+  end
+
+  def cpu_win?
+    @player_board.has_lost?
+  end
+
+  def player_win?
+    @cpu_board.has_lost?
   end
 
   def new_game
@@ -63,18 +81,6 @@ class Game
       puts "Invalid input!"
       continue?
     end
-  end
-
-  def game_over?
-    cpu_win? || player_win?
-  end
-
-  def cpu_win?
-    @player_board.has_lost?
-  end
-
-  def player_win?
-    @cpu_board.has_lost?
   end
 
   def player_in

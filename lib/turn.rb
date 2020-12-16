@@ -13,10 +13,15 @@ class Turn
     puts game_state
 
     player_result = player_shot
-    cpu_result = cpu_shot
+
+    cpu_result = cpu_shot unless player_win?# Will not run if player has won
 
     puts player_result
     puts cpu_result
+  end
+
+  def player_win?
+    @cpu_board.has_lost?
   end
 
   def player_shot
@@ -58,7 +63,7 @@ class Turn
     puts " "
     puts "CPU BOARD"
     puts "==================="
-    puts @cpu_board.render
+    puts @cpu_board.render(true)
     puts " "
   end
 end

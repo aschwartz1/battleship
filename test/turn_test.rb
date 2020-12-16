@@ -23,6 +23,21 @@ class TurnTest < Minitest::Test
     assert_instance_of Turn, @turn
   end
 
+  def test_player_can_win
+    cpu_submarine = Ship.new('Submarine', 2)
+    player_submarine = Ship.new('Submarine', 2)
+
+    @cpu.place(cpu_submarine, ["A1", "A2"])
+    @player.place(player_submarine, ["A1", "A2"])
+
+    assert_equal false, @turn.player_win?
+
+    cpu_submarine.hit
+    cpu_submarine.hit
+
+    assert_equal true, @turn.player_win?
+  end
+
   def test_cpu_generates_random_coordinates
     3.times do
       coordinate = @turn.cpu_random_coordinate
