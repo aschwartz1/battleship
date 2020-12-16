@@ -94,21 +94,17 @@ class Game
     end
   end
 
-  def cpu_random_coordinate
-    (['A', 'B', 'C', 'D'].shuffle)[rand(0..3)] + rand(1..4).to_s
-  end
-
   def valid_cpu_cruiser_placement
-    coordinate_check = ["#{cpu_random_coordinate}" ,"#{cpu_random_coordinate}","#{cpu_random_coordinate}" ]
+    coordinate_check = ["#{@turn.cpu_random_coordinate}" ,"#{@turn.cpu_random_coordinate}","#{@turn.cpu_random_coordinate}" ]
     until @cpu_board.cpu_place(@cpu_cruiser, coordinate_check)
-      coordinate_check = ["#{cpu_random_coordinate}" ,"#{cpu_random_coordinate}","#{cpu_random_coordinate}" ]
+      coordinate_check = ["#{@turn.cpu_random_coordinate}" ,"#{@turn.cpu_random_coordinate}","#{@turn.cpu_random_coordinate}" ]
     end
   end
 
   def valid_cpu_sub_placement
-    coordinate_check = ["#{cpu_random_coordinate}" ,"#{cpu_random_coordinate}"]
+    coordinate_check = ["#{@turn.cpu_random_coordinate}" ,"#{@turn.cpu_random_coordinate}"]
     until @cpu_board.cpu_place(@cpu_submarine, coordinate_check)
-      coordinate_check = ["#{cpu_random_coordinate}" ,"#{cpu_random_coordinate}"]
+      coordinate_check = ["#{@turn.cpu_random_coordinate}" ,"#{@turn.cpu_random_coordinate}"]
     end
   end
 
