@@ -69,4 +69,48 @@ class ShipTest < MiniTest::Test
     assert_equal "H", @cell.render(true)
     assert_equal "H", @cell.render
   end
+
+  def test_show_ship_helper
+    @cell.place_ship(@cruiser)
+    assert_equal true, @cell.hidden_ship_present?
+  end
+
+  def test_sunk_helper_method
+    sunk_cruiser = Ship.new("Cruiser",1)
+    @cell.place_ship(sunk_cruiser)
+    @cell.fire_upon
+
+    assert_equal true, @cell.render_sunk?
+  end
+
+  def test_hit_helper_method
+    @cell.place_ship(@cruiser)
+    @cell.fire_upon
+
+    assert_equal true, @cell.render_hit?
+  end
+
+  def test_empty_helper_method
+    assert_equal true, @cell.render_empty?
+  end
+
+  def test_miss_helper_method
+    @cell.fire_upon
+    assert_equal true, @cell.render_miss?
+  end
+
+  def test_it_can_return_hit_and_miss
+    hit_cruiser = Ship.new("Cruiser",2)
+    assert_equal "shot on B4 was a miss.", @cell.get_shot_message
+    @cell.place_ship(hit_cruiser)
+    @cell.fire_upon
+    assert_equal "shot on B4 was a hit!", @cell.get_shot_message
+  end
+
+  def test_it_can_return_sunk_message
+    sunk_cruiser = Ship.new("Cruiser",1)
+    @cell.place_ship(sunk_cruiser)
+    @cell.fire_upon
+    assert_equal "shot on B4 sunk a Cruiser!", @cell.get_shot_message
+  end
 end

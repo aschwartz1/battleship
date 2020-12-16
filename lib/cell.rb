@@ -51,8 +51,6 @@ class Cell
     end
   end
 
-  private
-
   def get_shot_message
       if !empty? && !@ship.sunk?
         "shot on #{coordinate} was a hit!"
